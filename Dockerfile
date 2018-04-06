@@ -11,6 +11,6 @@ RUN apk update &&  \
 FROM alpine
 MAINTAINER Marcos Lorenzo de Santiago <marcos.lorenzodesantiago@gmail.com>
 LABEL Description="ProxPush proxy docker image"
-COPY --from=build /go/bin/proxy /proxy
+COPY --from=build /go/bin/proxy /pushprox-proxy
 
-ENTRYPOINT [ "/proxy" ]
+ENTRYPOINT [ "/pushprox-proxy" ]
