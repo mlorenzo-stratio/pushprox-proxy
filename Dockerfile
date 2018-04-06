@@ -7,6 +7,7 @@ RUN apk update &&  \
     cd /go/src/github.com/robustperception/pushprox/proxy && \
     go build
 
+
 FROM alpine
 MAINTAINER Marcos Lorenzo de Santiago <marcos.lorenzodesantiago@gmail.com>
 LABEL Description="ProxPush proxy docker image"
