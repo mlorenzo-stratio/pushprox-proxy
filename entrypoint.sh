@@ -29,10 +29,10 @@ LOG_LEVEL=${LOG_LEVEL:-"info"}
 #                                 Address to listen on for proxy and client requests.
 #      --log.level=info           Only log messages with the given severity or above. One of: [debug, info, warn,
 
-/pushprox-proxy --scrape.max-timeout="$SCRAPE_MAX" --scrape.default-timeout="$SCRAPE_DEFAULT" --registration.timeout="$REGISTRATION_TIMEOUT" --log.level="$LOG_LEVEL" &
+/pushprox-proxy --scrape.max-timeout="$SCRAPE_MAX" --scrape.default-timeout="$SCRAPE_DEFAULT" --registration.timeout="$REGISTRATION_TIMEOUT" --log.level="$LOG_LEVEL" --web.listen-address="localhost:8080" &
 # Build nginx config if pushprox-proxy started correctly
 if [[ $? == 0 ]]; then
-   envsubst '$SERVER_NAME' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
+   envsubst \$SERVER_NAME < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
    cat /etc/nginx/nginx.conf && \
    nginx -g 'daemon off;' 2>&1
 fi
