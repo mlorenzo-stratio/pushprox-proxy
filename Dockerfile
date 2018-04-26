@@ -19,4 +19,6 @@ RUN apk add --no-cache bash gettext nginx && \
     ln -s /dev/stdout access.log && \
     ln -s /dev/stderr error.log
 
+EXPOSE tcp/7070 tcp/7071
+
 ENTRYPOINT [ "/entrypoint.sh" ]
