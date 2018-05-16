@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
 
-# Variables needed:
-# $SERVER_NAME
-
-# SERVER_CERT => /etc/nginx/certs/cert.pem
-# SERVER_KEY  => /etc/nginx/certs/cert.key
-
-if [[ ! $SERVER_NAME ]] || [[ ! -e "/etc/nginx/certs/cert.pem" ]] || [[ ! -e "/etc/nginx/certs/cert.key" ]]; then
-    >&2 echo -e "ERROR!! Empty variable \$SERVER_NAME or SSL cert or key not found"
-    exit 1
-fi
-
 # Set pushprox-proxy values if found or apply default ones
 SCRAPE_MAX=${SCRAPE_MAX:-"5m"}
 SCRAPE_DEFAULT=${SCRAPE_DEFAULT:-"15s"}
@@ -29,10 +18,4 @@ LOG_LEVEL=${LOG_LEVEL:-"info"}
 #                                 Address to listen on for proxy and client requests.
 #      --log.level=info           Only log messages with the given severity or above. One of: [debug, info, warn,
 
-/pushprox-proxy --scrape.max-timeout="$SCRAPE_MAX" --scrape.default-timeout="$SCRAPE_DEFAULT" --registration.timeout="$REGISTRATION_TIMEOUT" --log.level="$LOG_LEVEL" --web.listen-address="localhost:8080" &
-# Build nginx config if pushprox-proxy started correctly
-if [[ $? == 0 ]]; then
-   envsubst \$SERVER_NAME < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
-   cat /etc/nginx/nginx.conf && \
-   nginx -g 'daemon off;' 2>&1
-fi
+/pushprox-proxy --scrape.max-timeout="$SCRAPE_MAX" --scrape.default-timeout="$SCRAPE_DEFAULT" --registration.timeout="$REGISTRATION_TIMEOUT" --log.level="$LOG_LEVEL" --web.listen-address=":7070"
