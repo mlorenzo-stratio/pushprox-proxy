@@ -12,6 +12,9 @@ MAINTAINER Marcos Lorenzo de Santiago <marcos.lorenzodesantiago@gmail.com>
 LABEL Description="ProxPush proxy docker image"
 COPY --from=build /go/bin/proxy /pushprox-proxy
 COPY entrypoint.sh /
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache bash
 
 EXPOSE 7070/tcp
 
